@@ -8,18 +8,18 @@ import customizationImg from '../assets/images/customization.png'
 const servicesData = [
   {
     imgUrl: weatherImg,
-    title: `Calculate Weather`,
-    desc: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.`,
+    title: `Thời tiết`,
+    desc: `Điều kiện thời tiết lý tưởng cho một ngày trekking thú vị.`,
   },
   {
     imgUrl: guideImg,
-    title: `Best Tour Guide`,
-    desc: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.`,
+    title: `Hướng dẫn viên`,
+    desc: `Hướng dẫn viên nhiệt tình, có kinh nghiệm và chuyên nghiệp.`,
   },
   {
     imgUrl: customizationImg,
-    title: 'Customization',
-    desc: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.`,
+    title: 'Cá nhân hoá',
+    desc: `Tạo ra những trải nghiệm trekking độc đáo và cá nhân hóa, mang lại sự hài lòng và thoải mái cho khách hàng.`,
   },
 ]
 

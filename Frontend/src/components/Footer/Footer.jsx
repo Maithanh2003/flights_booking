@@ -44,7 +44,7 @@ const Footer = () => {
           <Col lg='3'>
             <div className="logo">
               <img src={logo} alt="" />
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, enim.</p>
+              <p>Cuộc sống giống như leo núi, đừng bao giờ nhìn xuống.</p>
               <div className="social__link d-flex align-items-center gap-4">
                 <span>
                   <Link to='#'>
@@ -71,7 +71,7 @@ const Footer = () => {
           </Col>
 
           <Col lg='3'>
-            <h5 className="footer__link-title">Discover</h5>
+            <h5 className="footer__link-title">About</h5>
 
             <ListGroup className='footer__quick-links'>
               {
@@ -84,7 +84,7 @@ const Footer = () => {
             </ListGroup>
           </Col>
           <Col lg='3'>
-            <h5 className="footer__link-title">Quick Links</h5>
+            <h5 className="footer__link-title">Link</h5>
 
             <ListGroup className='footer__quick-links'>
               {

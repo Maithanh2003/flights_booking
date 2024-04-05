@@ -22,12 +22,12 @@ const Home = () => {
           <Col lg='6'>
             <div className="hero__content">
               <div className="hero__subtitle d-flex align-items-center">
-                <Subtitle subtitle={'Know Before You Go'} />
+                <Subtitle subtitle={'To Travel is to Live'} />
                 <img src={worldImg} alt="" />
               </div>
-              <h1>Traveling opens the door to creating <span className='hightlight'> memories</span></h1>
+              <h1>Mỗi một chuyến đi là một lần  <span className='hightlight'> trải nghiệm</span></h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Cuộc sống giống như leo núi, đừng bao giờ nhìn xuống.
               </p>
             </div>
           </Col>
@@ -59,8 +59,8 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='3'>
-            <h5 className="services__subtitle">What we serve</h5>
-            <h2 className="services__title">We offer our best services</h2>
+            <h5 className="services__subtitle">Đem lại</h5>
+            <h2 className="services__title">Dịch vụ trải nghiệm hàng đầu</h2>
           </Col>
           <ServiceList />
         </Row>
@@ -73,8 +73,8 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='12' className='mb-5'>
-            <Subtitle subtitle={'Explore'} />
-            <h2 className='featured__tour-title'>Our featured tours</h2>
+            <Subtitle subtitle={'Khám phá thêm'} />
+            <h2 className='featured__tour-title'>Tour trải nghiệm</h2>
           </Col>
           <FeaturedTourList />
         </Row>
@@ -87,24 +87,24 @@ const Home = () => {
         <Row>
           <Col lg='6'>
             <div className="experience__content">
-              <Subtitle subtitle={'Experience'} />
-              <h2>With our all experience <br /> we will serve you</h2>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                <br /> Quas aliquam, hic tempora inventore suscipit unde. </p>
+              <Subtitle subtitle={'Trải nghiệm'} />
+              <h2>Cùng Viettrek chinh phục<br />  những đỉnh núi Việt Nam.</h2>
+              <p>Tuổi trẻ là những chuyến đi dài.
+                <br /> Đi để nối dài thế giới bằng những trải nghiệm </p>
             </div>
 
             <div className="counter__wrapper d-flex align-items-center gap-5">
               <div className="counter__box">
                 <span>12k+</span>
-                <h6>Successful trip</h6>
+                <h6>chuyến đi đã thực hiện</h6>
               </div>
               <div className="counter__box">
                 <span>2k+</span>
-                <h6>Regular clients</h6>
+                <h6>Khách hàng</h6>
               </div>
               <div className="counter__box">
                 <span>15</span>
-                <h6>Year experience</h6>
+                <h6>Năm thành lập</h6>
               </div>
             </div>
           </Col>
@@ -123,8 +123,8 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='12'>
-            <Subtitle subtitle={'Gallery'} />
-            <h2 className="gallery__title">Visit our customers tour gallery</h2>
+            <Subtitle subtitle={'Thư viện ảnh'} />
+            <h2 className="gallery__title">Khám phá hành trình qua các ảnh của chúng tôi.</h2>
           </Col>
           <Col lg='12'>
             <MasonryImagesGallery />
