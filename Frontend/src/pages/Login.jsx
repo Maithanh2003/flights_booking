@@ -36,7 +36,7 @@ const Login = () => {
                 <div className="user">
                   <img src={userIcon} alt="" />
                 </div>
-                <h2>Login</h2>
+                <h2>Đăng nhập</h2>
 
                 <Form onSubmit={handleClick}>
                   <FormGroup>
@@ -45,9 +45,9 @@ const Login = () => {
                   <FormGroup>
                     <input type="password" placeholder='Password' id='password' onChange={handleChange} required />
                   </FormGroup>
-                  <Button className='btn secondary__btn auth__btn' type='submit'>Login</Button>
+                  <Button className='btn secondary__btn auth__btn' type='submit'>Đăng nhập</Button>
                 </Form>
-                <p>Don't have an account? <Link to='/register'>Create</Link></p>
+                <p>Chưa có tài khoản? <Link to='/register'>Tạo tài khoản mới</Link></p>
               </div>
             </div>
           </Col>

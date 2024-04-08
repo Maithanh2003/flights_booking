@@ -32,7 +32,7 @@ const TourCard = ({ tour }) => {
 
                 {/* price  */}
                 <div className="card__bottom d-flex align-items-center justify-content-between mt-3">
-                    <h5>{price} <span>đ /1 người</span></h5>
+                    <h5>{price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} <span> /1 người</span></h5>
 
                     <button className="btn booking-btn">
                         <Link to={`/tours/${id}`}>Đặt Tour</Link>
