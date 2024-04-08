@@ -1,10 +1,12 @@
-import tourImg01 from "../images/tour-img01.jpg";
-import tourImg02 from "../images/tour-img02.jpg";
-import tourImg03 from "../images/tour-img03.jpg";
-import tourImg04 from "../images/tour-img04.jpg";
-import tourImg05 from "../images/tour-img05.jpg";
-import tourImg06 from "../images/tour-img06.jpg";
-import tourImg07 from "../images/tour-img07.jpg";
+import tourImg01 from "../images/tour-img01.jpeg";
+import tourImg02 from "../images/tour-img02.jpeg";
+import tourImg03 from "../images/tour-img03.jpeg";
+import tourImg04 from "../images/tour-img04.jpeg";
+import tourImg05 from "../images/tour-img05.jpeg";
+import tourImg06 from "../images/tour-img06.jpeg";
+import tourImg07 from "../images/tour-img07.jpeg";
+import tourImg08 from "../images/tour-img08.jpeg";
+
 
 const tours = [
   {
@@ -13,7 +15,7 @@ const tours = [
     city: "London",
     distance: 300,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 10,
     desc: "this is the description",
     reviews: [
@@ -36,7 +38,7 @@ const tours = [
     city: "Indonesia",
     distance: 400,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -55,7 +57,7 @@ const tours = [
     city: "Thailand",
     distance: 500,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -74,7 +76,7 @@ const tours = [
     city: "Thailand",
     distance: 500,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -93,7 +95,7 @@ const tours = [
     city: "Indonesia",
     distance: 500,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -112,7 +114,7 @@ const tours = [
     city: "Japan",
     distance: 500,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -131,7 +133,7 @@ const tours = [
     city: "France",
     distance: 500,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -150,7 +152,7 @@ const tours = [
     city: "Thailand",
     distance: 500,
     address: 'Somewhere',
-    price: 99000000,
+    price: 9900000,
     maxGroupSize: 8,
     desc: "this is the description",
     reviews: [
@@ -160,7 +162,7 @@ const tours = [
       },
     ],
     avgRating: 4.5,
-    photo: tourImg03,
+    photo: tourImg08,
     featured: false,
   },
 ];

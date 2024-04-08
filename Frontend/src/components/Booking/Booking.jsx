@@ -33,7 +33,7 @@ const Booking = ({ tour, avgRating }) => {
     return (
         <div className="booking">
             <div className="booking__top d-flex align-items-center justify-content-between">
-                <h3>{price}đ<span>/ người</span></h3>
+                <h3>{price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}<span>/ người</span></h3>
                 <span className="tour__rating d-flex align-items-center gap-1">
                     <i class='ri-star-fill' style={{ 'color': 'var(--secondary-color)' }}></i>
                     {avgRating === 0 ? null : avgRating} ({reviews?.length})
@@ -66,15 +66,15 @@ const Booking = ({ tour, avgRating }) => {
                 <ListGroup>
                     <ListGroupItem className='border-0 px-0'>
                         <h5 className='d-flex align-items-center gap-1'>{price}đ <i class='ri-close-line'></i> 1 người</h5>
-                        <span> {price}đ</span>
+                        <span> {price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
                     </ListGroupItem>
                     <ListGroupItem className='border-0 px-0'>
                         <h5>Phí dịch vụ</h5>
-                        <span>{serviceFee}đ</span>
+                        <span>{serviceFee.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
                     </ListGroupItem>
                     <ListGroupItem className='border-0 px-0 total'>
                         <h5>Tổng</h5>
-                        <span>{totalAmount}đ</span>
+                        <span>{totalAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
                     </ListGroupItem>
                 </ListGroup>
 

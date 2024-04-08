@@ -24,33 +24,7 @@ const TourDetails = () => {
     e.preventDefault()
     const reviewText = reviewMsgRef.current.value
 
-    // try {
-    //   if (!user || user === undefined || user === null) {
-    //     alert('Please sign in')
-    //   }
-    //   const reviewObj = {
-    //     username: user?.username,
-    //     reviewText,
-    //     rating: tourRating
-    //   }
 
-    //   const res = await fetch(`${BASE_URL}/review/${id}`, {
-    //     method: 'post',
-    //     headers: {
-    //       'content-type': 'application/json'
-    //     },
-    //     credentials: 'include',
-    //     body: JSON.stringify(reviewObj)
-    //   })
-
-    //   const result = await res.json()
-    //   if (!res.ok) {
-    //     return alert(result.message)
-    //   }
-    //   alert(result.message)
-    // } catch (error) {
-    //   alert(error.message)
-    // }
   }
 
 
@@ -78,7 +52,7 @@ const TourDetails = () => {
 
                   <div className="tour__extra-details">
                     <span><i class='ri-map-pin-2-line'></i> {city}</span>
-                    <span><i class='ri-money-dollar-circle-line'></i> {price}/ người</span>
+                    <span><i class='ri-money-dollar-circle-line'></i> {price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}/ người</span>
                     <span><i class='ri-map-pin-time-line'></i> {distance} k/m</span>
                     <span><i class='ri-group-line'></i> {maxGroupSize} người</span>
                   </div>
