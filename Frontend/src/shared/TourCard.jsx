@@ -5,7 +5,7 @@ import './tour-card.css'
 import calculateAvgRating from '../ultis/avgRating'
 
 const TourCard = ({ tour }) => {
-    const { id, title, city, photo, price, featured, reviews } = tour
+    const { _id, title, city, photo, price, featured, reviews } = tour
     const { totalRating, avgRating } = calculateAvgRating(reviews)
     return (
         <div className='tour__card'>
@@ -28,14 +28,14 @@ const TourCard = ({ tour }) => {
                 </div>
 
                 {/* tour title  */}
-                <h5 className='tour__title'><Link to={`/tours/${id}`}>{title}</Link></h5>
+                <h5 className='tour__title'><Link to={`/tours/${_id}`}>{title}</Link></h5>
 
                 {/* price  */}
                 <div className="card__bottom d-flex align-items-center justify-content-between mt-3">
-                    <h5>{price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} <span> /1 người</span></h5>
+                    <h5>{price} <span>đ /1 người</span></h5>
 
                     <button className="btn booking-btn">
-                        <Link to={`/tours/${id}`}>Đặt Tour</Link>
+                        <Link to={`/tours/${_id}`}>Đặt Tour</Link>
                     </button>
                 </div>
             </CardBody>
