@@ -2,14 +2,19 @@ import React, { useState, useContext } from 'react'
 import './booking.css'
 import { useNavigate } from 'react-router-dom'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { BASE_URL } from '../../ultis/config'
+import { AuthContext } from '../../context/AuthContext'
+
 const Booking = ({ tour, avgRating }) => {
 
-    const { price, reviews } = tour
+    const { price, reviews, title } = tour
     const navigate = useNavigate()
-    const [credentials, setCredentials] = useState({
-        userId: '01',
-        userEmail: 'exam@gmail.com',
-        // tourName: 'title',
+    const { user } = useContext(AuthContext)
+
+    const [booking, setBooking] = useState({
+        userId: user && user._id,
+        userEmail: user && user.email,
+        tourName: title,
         fullName: '',
         phone: '',
         guestSize: 1,
@@ -17,16 +22,40 @@ const Booking = ({ tour, avgRating }) => {
     })
 
     const serviceFee = 10
-    const totalAmount = Number(price) * Number(credentials.guestSize) + Number(serviceFee)
+    const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee)
 
     const handleChange = e => {
-        setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }))
+        setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }))
     }
 
     //send data to server
     const handleClick = async e => {
         e.preventDefault()
-        navigate('/thank-you')
+        console.log(booking)
+
+        try {
+            if (!user || user === undefined || user === null) {
+                return alert('Please sign in')
+            }
+
+            const res = await fetch(`${BASE_URL}/booking`, {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(booking)
+            })
+
+            const result = await res.json()
+
+            if (!res.ok) {
+                return alert(result.message)
+            }
+            navigate('/thank-you')
+        } catch (error) {
+            alert(error.message)
+        }
 
     }
 
