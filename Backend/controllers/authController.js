@@ -18,7 +18,7 @@ export const register = async (req, res) => {
         await newUser.save()
 
         // return status code
-        res.status(StatusCode.Success).json({ success: true, message: "Successfully created!" })
+        res.status(200).json({ success: true, message: "Successfully created!" })
     } catch (error) {
         // return error code
         res.status(500).json({ success: false, message: "Failed to create! Try again." })

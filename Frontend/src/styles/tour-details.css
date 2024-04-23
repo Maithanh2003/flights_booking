@@ -115,6 +115,20 @@
     color: var(--secondary-color);
 }
 
+.inactive {
+    color: gray;
+    /* Đặt màu xám cho sao chưa được chọn */
+    cursor: pointer;
+    /* Biểu tượng con trỏ khi di chuột qua sao */
+}
+
+/* Class cho sao đã được chọn */
+.active {
+    color: rgb(232, 137, 60);
+    /* Đặt màu vàng cho sao đã được chọn */
+    cursor: pointer;
+    /* Biểu tượng con trỏ khi di chuột qua sao */
+}
 
 /* =============== RESPONSIVE ================ */
 @media only screen and (max-width: 768px) {

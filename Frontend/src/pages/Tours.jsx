@@ -18,7 +18,7 @@ const Tours = () => {
 
 
   useEffect(() => {
-    const pages = Math.ceil(tourCount / 4)
+    const pages = Math.ceil(tourCount / 8)
     setPageCount(pages)
     window.scrollTo(0, 0)
   }, [page, tourCount, tours])
