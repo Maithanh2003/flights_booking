@@ -10,6 +10,7 @@ const Booking = ({ tour, avgRating }) => {
     const { price, reviews, title } = tour
     const navigate = useNavigate()
     const { user } = useContext(AuthContext)
+    const accessToken = localStorage.getItem('accessToken');
 
     const [booking, setBooking] = useState({
         userId: user && user._id,
@@ -41,7 +42,8 @@ const Booking = ({ tour, avgRating }) => {
             const res = await fetch(`${BASE_URL}/booking`, {
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
                 },
                 credentials: 'include',
                 body: JSON.stringify(booking)

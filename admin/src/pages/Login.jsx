@@ -37,7 +37,23 @@ const Login = () => {
 
       const result = await res.json()
       if (!res.ok) alert(result.message)
-      console.log(result.data)
+
+
+      // add 
+      if (res.ok && result.token) {
+        // Lưu token vào local storage
+        localStorage.setItem('accessToken', result.token);
+        console.log(result.token)
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          console.log('Access token not found1');
+        }
+      } else {
+        // Xử lý lỗi hoặc thông báo không thành công
+        console.error('Đăng nhập không thành công');
+      }
+
+      console.log(result.role)
 
       dispatch({ type: "LOGIN_SUCCESS", payload: result.data })
       navigate('/')

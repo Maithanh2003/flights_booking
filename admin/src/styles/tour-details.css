@@ -51,6 +51,19 @@
     margin-bottom: 1.5rem;
 }
 
+.add-tour-container .btn {
+    margin-right: 1rem;
+    /* Add 1rem margin-right for spacing */
+    background-color: rgb(237, 155, 89);
+    /* Light green background color */
+    border-color: rgb(232, 137, 60);
+    /* Light green border color */
+    color: #8b5a5a;
+    /* Adjust text color for better contrast */
+    margin-top: 5px;
+    /* Add 5px margin-top */
+}
+
 .rating__group span {
     font-size: 1rem;
     display: flex;
@@ -128,6 +141,11 @@
     /* Đặt màu vàng cho sao đã được chọn */
     cursor: pointer;
     /* Biểu tượng con trỏ khi di chuột qua sao */
+}
+
+.update-btn {
+    text-decoration: none;
+    /* Tắt gạch chân dưới chữ */
 }
 
 /* =============== RESPONSIVE ================ */

@@ -30,6 +30,7 @@ const Header = () => {
    const { user, dispatch } = useContext(AuthContext)
 
    const logout = () => {
+      localStorage.removeItem('accessToken')
       dispatch({ type: 'LOGOUT' })
       navigate('/')
    }
