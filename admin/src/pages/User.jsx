@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import CommonSection from '../shared/CommonSection'
 import '../styles/tour.css'
-import TourCard from './../shared/TourCard'
-import SearchBar from './../shared/SearchBar'
 import { Col, Container, Row, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 import { BASE_URL } from '../ultis/config'
@@ -12,29 +10,39 @@ import "./../styles/user.css"
 const User = () => {
 
     const { data: users, loading, error } = useFetch(`${BASE_URL}/users`)
-    // update user 
+
+    const accessToken = localStorage.getItem('accessToken');
     const [selectedUser, setSelectedUser] = useState(null);
     const [formData, setFormData] = useState({ username: '', email: '' });
 
     const handleUpdate = () => {
         fetch(`${BASE_URL}/users/${selectedUser._id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            },
             body: JSON.stringify(formData)
         })
             .then((res) => res.json())
             .then((data) => {
                 alert("cap nhat thanh cong")
+
+                window.location.reload();
                 // Cập nhật lại danh sách người dùng sau khi cập nhật thành công
             })
             .catch((error) => {
                 alert("cap nhat that bai")
+
+                window.location.reload();
             });
+
     };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
     const handleEdit = (user) => {
         setSelectedUser(user);
         setFormData({ username: user.username, email: user.email });
@@ -44,11 +52,18 @@ const User = () => {
     const handleDelete = (id) => {
         fetch(`${BASE_URL}/users/${id}`, {
             method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            },
         })
-            .then((res) => res.json())
+            .then((res) => {
+                res.json()
+                alert("Deleted Successfully");
+                window.location.reload();
+            })
             .then((data) => {
                 if (data.deletedCount > 0) {
-                    alert("Deleted Successfully");
                     fetch(`${BASE_URL}/users/${id}`)
                         .then((res) => res.json())
                         .then((updatedUsers) => {
@@ -56,7 +71,8 @@ const User = () => {
                             console.log(remaining);
                         });
                 }
-            });
+            })
+            ;
     };
     return (
         <>
@@ -71,7 +87,7 @@ const User = () => {
             <section className='pt-0'>
                 <Container>
                     {loading && <h4 className='text-center pt-5'>LOADING..........</h4>}
-                    {error && <h4 className='text-center pt-5'>{error}</h4>}
+                    {error && <h4 className='text-center pt-5'>{"Bạn không có quyền truy cập"}</h4>}
                     {
                         !loading && !error &&
                         <Row>

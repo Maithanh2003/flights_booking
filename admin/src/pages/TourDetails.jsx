@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react'
 import '../styles/tour-details.css'
 // import tourData from '../assets/data/tours'
 import { Container, Row, Col, Form, ListGroup } from 'reactstrap'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import calculateAvgRating from '../ultis/avgRating'
 import avatar from '../assets/images/avatar.jpg'
 import Booking from '../components/Booking/Booking'
@@ -10,6 +10,7 @@ import Booking from '../components/Booking/Booking'
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/AuthContext'
+import EditTour from '../services/EditTour'
 
 const TourDetails = () => {
 
@@ -17,6 +18,8 @@ const TourDetails = () => {
   const reviewMsgRef = useRef('')
   const [tourRating, setTourRating] = useState(null)
   const { user } = useContext(AuthContext)
+  const accessToken = localStorage.getItem('accessToken')
+  const navigate = useNavigate()
 
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`)
 
@@ -41,7 +44,8 @@ const TourDetails = () => {
       const res = await fetch(`${BASE_URL}/review/${id}`, {
         method: 'post',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
         },
         credentials: 'include',
         body: JSON.stringify(reviewObj)
@@ -59,6 +63,37 @@ const TourDetails = () => {
     }
 
   }
+  const handleDelete = (id) => {
+    const accessToken = localStorage.getItem('accessToken');
+    fetch(`${BASE_URL}/tours/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          alert('Bạn không có quyền xoá')
+          navigate('/tours');
+        }
+        else {
+          alert("Xoá thành công");
+          navigate('/tours');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          fetch(`${BASE_URL}/tours/${id}`)
+            .then((res) => res.json())
+            .then((updatedTours) => {
+              const remaining = updatedTours.filter((tour) => tour._id !== id);
+              console.log(remaining);
+            });
+        }
+      });
+  };
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [tour])
@@ -105,13 +140,6 @@ const TourDetails = () => {
                     <h4>Đánh giá ({reviews?.length} đánh giá)</h4>
                     {/* // set tour rating  */}
                     <Form onSubmit={submitHandler}>
-                      {/* <div className="d-flex align-items-center gap-3 mb-4 rating__group">
-                        <span onClick={() => setTourRating(1)}>1 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(2)}>2 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(3)}>3 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(4)}>4 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(5)}>5 <i class='ri-star-s-fill'></i></span>
-                      </div> */}
                       <div className="d-flex align-items-center gap-3 mb-4 rating__group">
                         <span onClick={() => setTourRating(1)} className={tourRating >= 1 ? 'active' : 'inactive'}>1 <i className={`ri-star-s-fill ${tourRating >= 1 ? 'active' : 'inactive'}`}></i></span>
                         <span onClick={() => setTourRating(2)} className={tourRating >= 2 ? 'active' : 'inactive'}>2 <i className={`ri-star-s-fill ${tourRating >= 2 ? 'active' : 'inactive'}`}></i></span>
@@ -165,6 +193,16 @@ const TourDetails = () => {
             </Row>
           }
         </Container>
+        {/* xoa tour  */}
+        <Container>
+          <div className="add-tour-container ml-auto mt-4">
+            <div className="user-actions">
+              <Link to={`/tours/edit/${id}`} className="update-btn">Chỉnh sửa tour </Link>
+              <button className="delete-btn" onClick={() => handleDelete(tour._id)}>Xoá tour</button>
+            </div>
+          </div>
+        </Container>
+
       </section>
 
     </>
