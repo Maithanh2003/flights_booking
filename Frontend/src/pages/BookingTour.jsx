@@ -49,7 +49,7 @@ const BookingTour = () => {
 
             {error && <p className="error-message">{error}</p>}
             {user && ( // Only render if user data exists
-                bookingData?.data?.length > 0 ? ( // Check if bookings exist before mapping
+                id === user._id && bookingData?.data?.length > 0 ? ( // Check if bookings exist before mapping
                     <Container>
                         <div className="row">
                             {bookingData.data.map((booking, index) => (
