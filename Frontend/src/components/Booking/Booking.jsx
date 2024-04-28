@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { BASE_URL } from '../../ultis/config'
 import { AuthContext } from '../../context/AuthContext'
-
+const accessToken = localStorage.getItem('accessToken');
 const Booking = ({ tour, avgRating }) => {
 
     const { price, reviews, title } = tour
@@ -41,7 +41,8 @@ const Booking = ({ tour, avgRating }) => {
             const res = await fetch(`${BASE_URL}/booking`, {
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
                 },
                 credentials: 'include',
                 body: JSON.stringify(booking)

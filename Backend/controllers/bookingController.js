@@ -38,4 +38,17 @@ export const getAllBooking = async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: true, message: "Internal server error!" })
     }
-} 
+}
+export const getBookByUser = async (req, res) => {
+    const userId = req.params.id
+    // hear 'i' means case sensitive 
+    // const userEmail = new RegExp(req.query.userEmail, 'i')
+
+    try {
+        const books = await Booking.find({ userId })
+
+        res.status(200).json({ success: true, message: 'Successfully', data: books })
+    } catch (error) {
+        res.status(404).json({ success: false, message: 'Not Found' + error })
+    }
+}

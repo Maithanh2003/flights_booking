@@ -6,6 +6,7 @@ import { Col, Container, Row, Form, FormGroup, Label, Input, Button } from 'reac
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import "./../styles/user.css"
+import { Link } from 'react-router-dom';
 
 const User = () => {
 
@@ -104,6 +105,7 @@ const User = () => {
                                     </p>
                                     <div className="user-actions">
                                         <button className="update-btn" onClick={() => handleEdit(user)}>Update</button>
+                                        <Link to={`/booking/${user._id}`} className="update-btn">Tour đã đặt</Link>
                                         <button className="delete-btn" onClick={() => handleDelete(user._id)}>Delete</button>
                                     </div>
                                 </div>
@@ -138,6 +140,7 @@ const User = () => {
                                     </FormGroup>
                                     <div className="user-actions">
                                         <Button color="primary" onClick={handleUpdate}>Update</Button>
+                                        {/* <Button color="primary" onClick={handleTour}>Tour đã đặt</Button> */}
                                         <Button color="danger" onClick={() => setSelectedUser(null)}>Cancel</Button>
                                     </div>
                                 </Form>

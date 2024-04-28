@@ -193,14 +193,22 @@ const TourDetails = () => {
             </Row>
           }
         </Container>
-        {/* xoa tour  */}
+        {/* xoa tour va sua tour  */}
         <Container>
-          <div className="add-tour-container ml-auto mt-4">
-            <div className="user-actions">
-              <Link to={`/tours/edit/${id}`} className="update-btn">Chỉnh sửa tour </Link>
-              <button className="delete-btn" onClick={() => handleDelete(tour._id)}>Xoá tour</button>
+          {user ? (
+            <>
+              <div className="add-tour-container ml-auto mt-4">
+                <div className="user-actions">
+                  <Link to={`/tours/edit/${id}`} className="update-btn">Chỉnh sửa tour</Link>
+                  <button className="delete-btn" onClick={() => handleDelete(tour._id)}>Xoá tour</button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="logged-out-message">
+              { }
             </div>
-          </div>
+          )}
         </Container>
 
       </section>

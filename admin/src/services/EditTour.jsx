@@ -3,7 +3,7 @@ import { useParams, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../ultis/config';
 import useFetch from '../hooks/useFetch';
-const EditTour = (tour) => {
+const EditTour = () => {
     const { id } = useParams();
     const { data: tourData, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
     const accessToken = localStorage.getItem('accessToken')
@@ -59,52 +59,51 @@ const EditTour = (tour) => {
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4">Edit Tour</h2>
+            <h2 className="mb-4">Chỉnh sửa Tour</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Photo:</label>
+                    <label>Ảnh:</label>
                     <input type="text" className="form-control" name="photo" value={formData.photo} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>Title:</label>
+                    <label>Tiêu đề:</label>
                     <input type="text" className="form-control" name="title" value={formData.title} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>Description:</label>
+                    <label>Mô tả:</label>
                     <textarea className="form-control" name="desc" value={formData.desc} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>Price:</label>
+                    <label>Giá:</label>
                     <input type="text" className="form-control" name="price" value={formData.price} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>Address:</label>
+                    <label>Địa chỉ:</label>
                     <input type="text" className="form-control" name="address" value={formData.address} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>City:</label>
+                    <label>Thành phố:</label>
                     <input type="text" className="form-control" name="city" value={formData.city} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>Distance:</label>
+                    <label>Độ cao:</label>
                     <input type="text" className="form-control" name="distance" value={formData.distance} onChange={handleChange} />
                 </div>
 
                 <div className="form-group">
-                    <label>Max Group Size:</label>
+                    <label>Số lượng:</label>
                     <input type="text" className="form-control" name="maxGroupSize" value={formData.maxGroupSize} onChange={handleChange} />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Save Changes</button>
+                <button type="submit" className="btn btn-primary">Thêm mới </button>
             </form>
         </div>
     );
 }
-
 export default EditTour;

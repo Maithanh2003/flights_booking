@@ -10,7 +10,7 @@ import Booking from '../components/Booking/Booking'
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/AuthContext'
-
+const accessToken = localStorage.getItem('accessToken');
 const TourDetails = () => {
 
   const { id } = useParams()
@@ -41,7 +41,8 @@ const TourDetails = () => {
       const res = await fetch(`${BASE_URL}/review/${id}`, {
         method: 'post',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
         },
         credentials: 'include',
         body: JSON.stringify(reviewObj)

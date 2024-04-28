@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useContext } from 'react'
 import "./header.css"
 import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+
 const nav__links = [
    {
       path: '/home',
@@ -17,6 +18,7 @@ const nav__links = [
       path: '/tours',
       display: 'Tours'
    },
+
 ]
 
 const Header = () => {
@@ -27,7 +29,7 @@ const Header = () => {
 
    const logout = () => {
       dispatch({ type: 'LOGOUT' })
-      navigate('/')
+      navigate('/booked')
    }
 
    const stickyHeaderFunc = () => {
@@ -77,6 +79,7 @@ const Header = () => {
                      <div className="nav__btns d-flex align-items-center gap-4 ">
                         {
                            user ? <> <h5 className='mb-0'>{user.username}</h5>
+                              <Link to={`/booked/${user._id}`} className="booking-link">Booking</Link>
                               <Button className='btn btn-dark' onClick={logout}>Logout</Button>
                            </> : <>
                               <Button className='btn secondary__btn'><Link to='/login'>Login</Link></Button>
@@ -92,7 +95,7 @@ const Header = () => {
                </div>
             </Row>
          </Container>
-      </header>
+      </header >
    )
 }
 
