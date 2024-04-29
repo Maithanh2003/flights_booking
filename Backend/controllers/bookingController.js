@@ -1,5 +1,7 @@
 import Booking from './../models/Booking.js'
 import Tour from './../models/Tour.js'
+import { Mutex } from 'async-mutex';
+const mutex = new Mutex();
 
 
 // create new booking
@@ -7,7 +9,9 @@ export const createBooking = async (req, res) => {
     const newBooking = new Booking(req.body)
 
     try {
+        const release = await mutex.acquire();
         const savedBooking = await newBooking.save()
+        release();
 
         res.status(200).json({ success: true, message: "Your tour is booked!", data: savedBooking })
     } catch (error) {

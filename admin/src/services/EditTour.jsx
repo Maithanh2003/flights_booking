@@ -101,7 +101,7 @@ const EditTour = () => {
                     <input type="text" className="form-control" name="maxGroupSize" value={formData.maxGroupSize} onChange={handleChange} />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Thêm mới </button>
+                <button type="submit" className="btn btn-primary">Lưu </button>
             </form>
         </div>
     );

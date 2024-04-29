@@ -33,8 +33,8 @@ const Booking = ({ tour, avgRating, personCount }) => {
     const handleClick = async e => {
         e.preventDefault()
 
-        if (personCount < 0) {
-            alert("Đã hết vé");
+        if (personCount < booking.guestSize) {
+            alert("Không đủ vé");
             return window.location.reload(); // Load lại trang
         }
         console.log(booking)
