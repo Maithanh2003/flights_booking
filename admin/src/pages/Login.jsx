@@ -43,7 +43,7 @@ const Login = () => {
       if (res.ok && result.token) {
         // Lưu token vào local storage
         localStorage.setItem('accessToken', result.token);
-        console.log(result.token)
+        console.log(result.role)
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) {
           console.log('Access token not found1');

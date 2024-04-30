@@ -5,7 +5,7 @@ import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { BASE_URL } from '../../ultis/config'
 import { AuthContext } from '../../context/AuthContext'
 
-const Booking = ({ tour, avgRating }) => {
+const Booking = ({ tour, avgRating, personCount }) => {
 
     const { price, reviews, title } = tour
     const navigate = useNavigate()
@@ -32,6 +32,11 @@ const Booking = ({ tour, avgRating }) => {
     //send data to server
     const handleClick = async e => {
         e.preventDefault()
+
+        if (personCount < booking.guestSize) {
+            alert("Không đủ vé");
+            return window.location.reload(); // Load lại trang
+        }
         console.log(booking)
 
         try {

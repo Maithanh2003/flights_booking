@@ -10,7 +10,7 @@ import Booking from '../components/Booking/Booking'
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/AuthContext'
-
+const accessToken = localStorage.getItem('accessToken');
 const TourDetails = () => {
 
   const { id } = useParams()
@@ -19,11 +19,12 @@ const TourDetails = () => {
   const { user } = useContext(AuthContext)
 
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`)
-
+  const { data: count } = useFetch(`${BASE_URL}/booking/search/${id}`)
   const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour
 
   const { totalRating, avgRating } = calculateAvgRating(reviews)
   const options = { day: 'numeric', month: 'long', year: 'numeric' }
+  const personCount = maxGroupSize - count;
 
   const submitHandler = async e => {
     e.preventDefault()
@@ -41,7 +42,8 @@ const TourDetails = () => {
       const res = await fetch(`${BASE_URL}/review/${id}`, {
         method: 'post',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
         },
         credentials: 'include',
         body: JSON.stringify(reviewObj)
@@ -62,6 +64,8 @@ const TourDetails = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [tour])
+
+
 
   return (
     <>
@@ -94,6 +98,7 @@ const TourDetails = () => {
                       <span><i class='ri-money-dollar-circle-line'></i> {price}/ người</span>
                       <span><i class='ri-map-pin-time-line'></i> {distance} k/m</span>
                       <span><i class='ri-group-line'></i> {maxGroupSize} người</span>
+                      <span>còn lại<i class='ri-group-line'></i> {personCount} vé</span>
                     </div>
 
                     <h5>Đặc điểm nổi bật</h5>
@@ -105,13 +110,6 @@ const TourDetails = () => {
                     <h4>Đánh giá ({reviews?.length} đánh giá)</h4>
                     {/* // set tour rating  */}
                     <Form onSubmit={submitHandler}>
-                      {/* <div className="d-flex align-items-center gap-3 mb-4 rating__group">
-                        <span onClick={() => setTourRating(1)}>1 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(2)}>2 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(3)}>3 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(4)}>4 <i class='ri-star-s-fill'></i></span>
-                        <span onClick={() => setTourRating(5)}>5 <i class='ri-star-s-fill'></i></span>
-                      </div> */}
                       <div className="d-flex align-items-center gap-3 mb-4 rating__group">
                         <span onClick={() => setTourRating(1)} className={tourRating >= 1 ? 'active' : 'inactive'}>1 <i className={`ri-star-s-fill ${tourRating >= 1 ? 'active' : 'inactive'}`}></i></span>
                         <span onClick={() => setTourRating(2)} className={tourRating >= 2 ? 'active' : 'inactive'}>2 <i className={`ri-star-s-fill ${tourRating >= 2 ? 'active' : 'inactive'}`}></i></span>
@@ -160,7 +158,7 @@ const TourDetails = () => {
               </Col>
 
               <Col lg='4'>
-                <Booking tour={tour} avgRating={avgRating} />
+                <Booking tour={tour} avgRating={avgRating} personCount={personCount} />
               </Col>
             </Row>
           }

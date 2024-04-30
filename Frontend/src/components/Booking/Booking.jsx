@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { BASE_URL } from '../../ultis/config'
 import { AuthContext } from '../../context/AuthContext'
-
-const Booking = ({ tour, avgRating }) => {
+const accessToken = localStorage.getItem('accessToken');
+const Booking = ({ tour, avgRating, personCount }) => {
 
     const { price, reviews, title } = tour
     const navigate = useNavigate()
@@ -27,10 +27,36 @@ const Booking = ({ tour, avgRating }) => {
     const handleChange = e => {
         setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }))
     }
+    // const handleBookingSuccess = async () => {
+    //     try {
+    //         console.log(personCount)
+    //         const updatedMaxGroupSize = personCount - booking.guestSize;
+    //         const res = await fetch(`${BASE_URL}/tour/${tour._id}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'content-type': 'application/json',
+    //                 Authorization: `Bearer ${accessToken}`,
+    //             },
+    //             body: JSON.stringify({ maxGroupSize: updatedMaxGroupSize }),
+    //         });
 
+    //         if (res.ok) {
+    //             navigate('/thank-you');
+    //         } else {
+    //             throw new Error('Cập nhật maxGroupSize không thành công');
+    //         }
+    //     } catch (error) {
+    //         console.error('Lỗi khi cập nhật maxGroupSize:', error);
+    //         alert('Có lỗi xảy ra khi cập nhật maxGroupSize');
+    //     }
+    // };
     //send data to server
     const handleClick = async e => {
         e.preventDefault()
+        if (personCount < booking.guestSize) {
+            alert("Không đủ vé");
+            return window.location.reload(); // Load lại trang
+        }
         console.log(booking)
 
         try {
@@ -41,7 +67,8 @@ const Booking = ({ tour, avgRating }) => {
             const res = await fetch(`${BASE_URL}/booking`, {
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
                 },
                 credentials: 'include',
                 body: JSON.stringify(booking)
@@ -53,6 +80,7 @@ const Booking = ({ tour, avgRating }) => {
                 return alert(result.message)
             }
             navigate('/thank-you')
+            // handleBookingSuccess();
         } catch (error) {
             alert(error.message)
         }

@@ -10,12 +10,16 @@ import User from '../pages/User'
 import AddTour from '../pages/AddTour'
 import ThankYou from '../pages/Thankyou'
 import EditTour from '../services/EditTour'
+import BookingUser from '../pages/BookingUser'
+import About from '../pages/About'
 const Routers = () => {
    return (
       <Routes>
          <Route path='/' element={<Navigate to='/home' />} />
          <Route path='/home' element={<Home />} />
+         <Route path='/about' element={<About />} />
          <Route path='/user' element={<User />} />
+         <Route path='/booking/:id' element={<BookingUser />} />
          <Route path='/tours' element={<Tours />} />
          <Route path='/tours/addtour' element={<AddTour />} />
          <Route path='/tours/:id' element={<TourDetails />} />

@@ -42,7 +42,7 @@ export const verifyUser = (req, res, next) => {
         }
 
         req.user = user
-        if (req.user.role === 'user') {
+        if (req.user.role === 'user' || req.user.role === 'admin') {
             next()
         } else {
             console.log("Access token not found")

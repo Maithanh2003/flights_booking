@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import CommonSection from '../shared/CommonSection'
 // import tourData from '../assets/data/tours'
 import '../styles/tour.css'
@@ -10,9 +10,11 @@ import { Link } from 'react-router-dom'
 
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
+import { AuthContext } from '../context/AuthContext'
 const Tours = () => {
   const [pageCount, setPageCount] = useState(0)
   const [page, setPage] = useState(0)
+  const { user } = useContext(AuthContext)
 
   const { data: tours, loading, error } = useFetch(`${BASE_URL}/tours?page=${page}`)
   const { data: tourCount } = useFetch(`${BASE_URL}/tours/search/getTourCount`)
@@ -28,14 +30,19 @@ const Tours = () => {
     <>
       <CommonSection title={"All Tours"} />
 
-      <Container>
-        <div className="add-tour-container ml-auto mt-4">
-          <Button className="btn btn-warning">
-            <Link to={`/tours/addtour`} className="button-link">Thêm tour</Link>
-          </Button>
+      {user ? (
+        <>
+          <div className="add-tour-container ml-auto mt-4">
+            <div className="user-actions">
+              <Link to={`/tours/addtour`} className="update-btn">Thêm mới tour </Link>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="logged-out-message">
+          { }
         </div>
-      </Container>
-
+      )}
       <section>
         <Container>
           <Row>

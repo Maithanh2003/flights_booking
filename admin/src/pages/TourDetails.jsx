@@ -22,11 +22,13 @@ const TourDetails = () => {
   const navigate = useNavigate()
 
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`)
+  const { data: count } = useFetch(`${BASE_URL}/booking/search/${id}`)
 
   const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour
 
   const { totalRating, avgRating } = calculateAvgRating(reviews)
   const options = { day: 'numeric', month: 'long', year: 'numeric' }
+  const personCount = maxGroupSize - count;
 
   const submitHandler = async e => {
     e.preventDefault()
@@ -128,7 +130,9 @@ const TourDetails = () => {
                       <span><i class='ri-map-pin-2-line'></i> {city}</span>
                       <span><i class='ri-money-dollar-circle-line'></i> {price}/ người</span>
                       <span><i class='ri-map-pin-time-line'></i> {distance} k/m</span>
-                      <span><i class='ri-group-line'></i> {maxGroupSize} người</span>
+                      <span> <i class='ri-group-line'></i> {maxGroupSize} người</span>
+                      <span>còn lại <i class='ri-group-line'></i> {personCount} vé </span>
+
                     </div>
 
                     <h5>Đặc điểm nổi bật</h5>
@@ -188,19 +192,27 @@ const TourDetails = () => {
               </Col>
 
               <Col lg='4'>
-                <Booking tour={tour} avgRating={avgRating} />
+                <Booking tour={tour} avgRating={avgRating} personCount={personCount} />
               </Col>
             </Row>
           }
         </Container>
-        {/* xoa tour  */}
+        {/* xoa tour va sua tour  */}
         <Container>
-          <div className="add-tour-container ml-auto mt-4">
-            <div className="user-actions">
-              <Link to={`/tours/edit/${id}`} className="update-btn">Chỉnh sửa tour </Link>
-              <button className="delete-btn" onClick={() => handleDelete(tour._id)}>Xoá tour</button>
+          {user ? (
+            <>
+              <div className="add-tour-container ml-auto mt-4">
+                <div className="user-actions">
+                  <Link to={`/tours/edit/${id}`} className="update-btn">Chỉnh sửa tour</Link>
+                  <button className="delete-btn" onClick={() => handleDelete(tour._id)}>Xoá tour</button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="logged-out-message">
+              { }
             </div>
-          </div>
+          )}
         </Container>
 
       </section>
