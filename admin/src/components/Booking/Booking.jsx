@@ -11,11 +11,11 @@ const Booking = ({ tour, avgRating, personCount }) => {
     const navigate = useNavigate()
     const { user } = useContext(AuthContext)
     const accessToken = localStorage.getItem('accessToken');
-
     const [booking, setBooking] = useState({
         userId: user && user._id,
         userEmail: user && user.email,
         tourName: title,
+        tourId: tour._id || '',
         fullName: '',
         phone: '',
         guestSize: 1,
