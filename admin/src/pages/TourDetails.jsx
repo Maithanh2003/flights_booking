@@ -10,7 +10,7 @@ import Booking from '../components/Booking/Booking'
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/AuthContext'
-
+import { jwtDecode } from 'jwt-decode'
 const TourDetails = () => {
 
   const { id } = useParams()
@@ -18,6 +18,18 @@ const TourDetails = () => {
   const [tourRating, setTourRating] = useState(null)
   const { user } = useContext(AuthContext)
   const accessToken = localStorage.getItem('accessToken')
+  let userRole = 'user'
+  if (accessToken) {
+    try {
+      // Giải mã token JWT để lấy thông tin
+      const decodedToken = jwtDecode(accessToken);
+      userRole = decodedToken.role;
+      console.log('User role:', userRole);
+    } catch (error) {
+    }
+  } else {
+    console.log('Access token not found');
+  }
   const navigate = useNavigate()
 
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`)
@@ -204,7 +216,7 @@ const TourDetails = () => {
         </Container>
         {/* xoa tour va sua tour  */}
         <Container>
-          {user ? (
+          {user && userRole === 'admin' ? (
             <>
               <div className="add-tour-container ml-auto mt-4">
                 <div className="user-actions">
