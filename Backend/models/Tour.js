@@ -1,5 +1,17 @@
 import mongoose from "mongoose";
 
+const userInfoSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    numberbook: {
+        type: Number,
+        required: true,
+    },
+});
+
 const tourSchema = new mongoose.Schema(
     {
         title: {
@@ -35,18 +47,17 @@ const tourSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-
         reviews: [
             {
                 type: mongoose.Types.ObjectId,
                 ref: "Review",
             },
         ],
-
         featured: {
             type: Boolean,
             default: false,
         },
+        userInfo: [userInfoSchema],
     },
     { timestamps: true }
 );

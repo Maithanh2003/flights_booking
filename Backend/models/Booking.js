@@ -28,6 +28,11 @@ const bookingSchema = new mongoose.Schema(
             type: Date,
             required: true
         },
+        tourId: {
+            type: String,
+            required: true,
+            // default: "empty",
+        },
     },
     { timestamps: true }
 );

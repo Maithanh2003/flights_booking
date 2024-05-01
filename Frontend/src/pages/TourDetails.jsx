@@ -19,12 +19,19 @@ const TourDetails = () => {
   const { user } = useContext(AuthContext)
 
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`)
-  const { data: count } = useFetch(`${BASE_URL}/booking/search/${id}`)
-  const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour
+  const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize, userInfo } = tour
 
   const { totalRating, avgRating } = calculateAvgRating(reviews)
   const options = { day: 'numeric', month: 'long', year: 'numeric' }
-  const personCount = maxGroupSize - count;
+  let personCount = maxGroupSize;
+  if (userInfo) {
+    userInfo.map((info) => {
+      console.log('User ID:', info.userId);
+      console.log('Number of bookings:', info.numberbook);
+      personCount -= info.numberbook;
+    });
+    console.log(personCount);
+  }
 
   const submitHandler = async e => {
     e.preventDefault()
@@ -98,7 +105,7 @@ const TourDetails = () => {
                       <span><i class='ri-money-dollar-circle-line'></i> {price}/ người</span>
                       <span><i class='ri-map-pin-time-line'></i> {distance} k/m</span>
                       <span><i class='ri-group-line'></i> {maxGroupSize} người</span>
-                      <span>còn lại<i class='ri-group-line'></i> {personCount} vé</span>
+                      <span><i class='ri-ticket-line'></i> {personCount} vé</span>
                     </div>
 
                     <h5>Đặc điểm nổi bật</h5>

@@ -10,7 +10,6 @@ import Booking from '../components/Booking/Booking'
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/AuthContext'
-import EditTour from '../services/EditTour'
 
 const TourDetails = () => {
 
@@ -22,14 +21,20 @@ const TourDetails = () => {
   const navigate = useNavigate()
 
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`)
-  const { data: count } = useFetch(`${BASE_URL}/booking/search/${id}`)
 
-  const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize } = tour
+  const { photo, title, desc, price, address, reviews, city, distance, maxGroupSize, userInfo } = tour
 
+  let personCount = maxGroupSize;
+  if (userInfo) {
+    userInfo.map((info) => {
+      console.log('User ID:', info.userId);
+      console.log('Number of bookings:', info.numberbook);
+      personCount -= info.numberbook;
+    });
+    console.log(personCount);
+  }
   const { totalRating, avgRating } = calculateAvgRating(reviews)
   const options = { day: 'numeric', month: 'long', year: 'numeric' }
-  const personCount = maxGroupSize - count;
-
   const submitHandler = async e => {
     e.preventDefault()
     const reviewText = reviewMsgRef.current.value

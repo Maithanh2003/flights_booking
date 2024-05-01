@@ -10,7 +10,19 @@ export const createBooking = async (req, res) => {
 
     try {
         const release = await mutex.acquire();
+
+        const tour = await Tour.findById(req.body.tourId);
+        if (!tour) {
+            return res.status(404).json({ success: false, message: "Tour not found" });
+        }
+        const userInfo = {
+            userId: req.body.userId,
+            numberbook: req.body.guestSize,
+        };
+        tour.userInfo.push(userInfo)
+        await tour.save();
         const savedBooking = await newBooking.save()
+
         release();
 
         res.status(200).json({ success: true, message: "Your tour is booked!", data: savedBooking })
