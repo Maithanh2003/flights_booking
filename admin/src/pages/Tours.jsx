@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import CommonSection from '../shared/CommonSection'
-// import tourData from '../assets/data/tours'
 import '../styles/tour.css'
-// import tours from '../assets/data/tours'
 import TourCard from './../shared/TourCard'
 import SearchBar from './../shared/SearchBar'
 import { Col, Container, Row, Button } from 'reactstrap'
@@ -11,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { BASE_URL } from '../ultis/config'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../context/AuthContext'
+import { jwtDecode } from 'jwt-decode'
 const Tours = () => {
   const [pageCount, setPageCount] = useState(0)
   const [page, setPage] = useState(0)
@@ -26,11 +25,25 @@ const Tours = () => {
     window.scrollTo(0, 0)
   }, [page, tourCount, tours])
 
+  //  handle hide button 
+  let userRole = 'user'
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    try {
+      // Giải mã token JWT để lấy thông tin
+      const decodedToken = jwtDecode(accessToken);
+      userRole = decodedToken.role;
+      console.log('User role:', userRole);
+    } catch (error) {
+    }
+  } else {
+    console.log('Access token not found');
+  }
   return (
     <>
       <CommonSection title={"All Tours"} />
 
-      {user ? (
+      {user && userRole === 'admin' ? (
         <>
           <div className="add-tour-container ml-auto mt-4">
             <div className="user-actions">
