@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { BASE_URL } from '../../ultis/config'
 import { AuthContext } from '../../context/AuthContext'
-
-const Booking = ({ tour, avgRating }) => {
+const accessToken = localStorage.getItem('accessToken');
+const Booking = ({ tour, avgRating, personCount }) => {
 
     const { price, reviews, title } = tour
     const navigate = useNavigate()
@@ -15,6 +15,7 @@ const Booking = ({ tour, avgRating }) => {
         userId: user && user._id,
         userEmail: user && user.email,
         tourName: title,
+        tourId: tour._id || '',
         fullName: '',
         phone: '',
         guestSize: 1,
@@ -28,9 +29,12 @@ const Booking = ({ tour, avgRating }) => {
         setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }))
     }
 
-    //send data to server
     const handleClick = async e => {
         e.preventDefault()
+        if (personCount < booking.guestSize) {
+            alert("Không đủ vé");
+            return window.location.reload(); // Load lại trang
+        }
         console.log(booking)
 
         try {
@@ -41,7 +45,8 @@ const Booking = ({ tour, avgRating }) => {
             const res = await fetch(`${BASE_URL}/booking`, {
                 method: 'post',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
                 },
                 credentials: 'include',
                 body: JSON.stringify(booking)

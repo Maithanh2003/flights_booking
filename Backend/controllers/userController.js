@@ -9,7 +9,8 @@ export const createUser = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Successfully created', data: savedUser })
     } catch (error) {
-        res.status(500).json({ success: true, message: 'Failed to create. Try again!' })
+        console.log(error)
+        res.status(500).json({ success: true, message: 'Failed to create. Try again!', error })
     }
 }
 
@@ -24,7 +25,8 @@ export const updateUser = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Successfully updated', data: updatedUser })
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to update' })
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Failed to update', error })
     }
 }
 
@@ -37,7 +39,8 @@ export const deleteUser = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Successfully deleted' })
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to delete' })
+        console.log(error)
+        res.status(500).json({ success: false, message: 'Failed to delete', error })
     }
 }
 
