@@ -2,14 +2,20 @@ import React, { useState, useContext } from 'react'
 import './booking.css'
 import { useNavigate } from 'react-router-dom'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from 'reactstrap'
-const Booking = ({ tour, avgRating }) => {
+import { BASE_URL } from '../../ultis/config'
+import { AuthContext } from '../../context/AuthContext'
+const accessToken = localStorage.getItem('accessToken');
+const Booking = ({ tour, avgRating, personCount }) => {
 
-    const { price, reviews } = tour
+    const { price, reviews, title } = tour
     const navigate = useNavigate()
-    const [credentials, setCredentials] = useState({
-        userId: '01',
-        userEmail: 'exam@gmail.com',
-        // tourName: 'title',
+    const { user } = useContext(AuthContext)
+
+    const [booking, setBooking] = useState({
+        userId: user && user._id,
+        userEmail: user && user.email,
+        tourName: title,
+        tourId: tour._id || '',
         fullName: '',
         phone: '',
         guestSize: 1,
@@ -17,23 +23,51 @@ const Booking = ({ tour, avgRating }) => {
     })
 
     const serviceFee = 10
-    const totalAmount = Number(price) * Number(credentials.guestSize) + Number(serviceFee)
+    const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee)
 
     const handleChange = e => {
-        setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }))
+        setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }))
     }
 
-    //send data to server
     const handleClick = async e => {
         e.preventDefault()
-        navigate('/thank-you')
+        if (personCount < booking.guestSize) {
+            alert("Không đủ vé");
+            return window.location.reload(); // Load lại trang
+        }
+        console.log(booking)
+
+        try {
+            if (!user || user === undefined || user === null) {
+                return alert('Please sign in')
+            }
+
+            const res = await fetch(`${BASE_URL}/booking`, {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+                credentials: 'include',
+                body: JSON.stringify(booking)
+            })
+
+            const result = await res.json()
+
+            if (!res.ok) {
+                return alert(result.message)
+            }
+            navigate('/thank-you')
+        } catch (error) {
+            alert(error.message)
+        }
 
     }
 
     return (
         <div className="booking">
             <div className="booking__top d-flex align-items-center justify-content-between">
-                <h3>{price}đ<span>/ người</span></h3>
+                <h3>{price}<span>/ người</span></h3>
                 <span className="tour__rating d-flex align-items-center gap-1">
                     <i class='ri-star-fill' style={{ 'color': 'var(--secondary-color)' }}></i>
                     {avgRating === 0 ? null : avgRating} ({reviews?.length})
@@ -66,15 +100,15 @@ const Booking = ({ tour, avgRating }) => {
                 <ListGroup>
                     <ListGroupItem className='border-0 px-0'>
                         <h5 className='d-flex align-items-center gap-1'>{price}đ <i class='ri-close-line'></i> 1 người</h5>
-                        <span> {price}đ</span>
+                        <span> {price}</span>
                     </ListGroupItem>
                     <ListGroupItem className='border-0 px-0'>
                         <h5>Phí dịch vụ</h5>
-                        <span>{serviceFee}đ</span>
+                        <span>{serviceFee}</span>
                     </ListGroupItem>
                     <ListGroupItem className='border-0 px-0 total'>
                         <h5>Tổng</h5>
-                        <span>{totalAmount}đ</span>
+                        <span>{totalAmount}</span>
                     </ListGroupItem>
                 </ListGroup>
 

@@ -5,6 +5,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import loginImg from '../assets/images/login.png'
 import userIcon from '../assets/images/user.png'
 
+import { AuthContext } from '../context/AuthContext'
+import { BASE_URL } from '../ultis/config'
+
 const Login = () => {
   const [credentials, setCredentials] = useState({
     email: undefined,
@@ -12,6 +15,7 @@ const Login = () => {
   })
 
   const navigate = useNavigate()
+  const { dispatch } = useContext(AuthContext)
 
   const handleChange = e => {
     setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }))
@@ -19,7 +23,39 @@ const Login = () => {
 
   const handleClick = async e => {
     e.preventDefault()
-    console.log(credentials)
+
+    dispatch({ type: 'LOGIN_START' })
+    try {
+      const res = await fetch(`${BASE_URL}/auth/login`, {
+        method: 'post',
+        headers: {
+          'content-type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(credentials)
+      })
+
+      const result = await res.json()
+      if (!res.ok) alert(result.message)
+      console.log(result.data)
+      if (res.ok && result.token) {
+        // Lưu token vào local storage
+        localStorage.setItem('accessToken', result.token);
+        console.log(result.role)
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          console.log('Access token not found1');
+        }
+      } else {
+        // Xử lý lỗi hoặc thông báo không thành công
+        console.error('Đăng nhập không thành công');
+      }
+
+      dispatch({ type: "LOGIN_SUCCESS", payload: result.data })
+      navigate('/')
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err.message })
+    }
   }
 
   return (
@@ -36,7 +72,7 @@ const Login = () => {
                 <div className="user">
                   <img src={userIcon} alt="" />
                 </div>
-                <h2>Login</h2>
+                <h2>Đăng nhập</h2>
 
                 <Form onSubmit={handleClick}>
                   <FormGroup>
@@ -45,9 +81,9 @@ const Login = () => {
                   <FormGroup>
                     <input type="password" placeholder='Password' id='password' onChange={handleChange} required />
                   </FormGroup>
-                  <Button className='btn secondary__btn auth__btn' type='submit'>Login</Button>
+                  <Button className='btn secondary__btn auth__btn' type='submit'>Đăng nhập</Button>
                 </Form>
-                <p>Don't have an account? <Link to='/register'>Create</Link></p>
+                <p>Chưa có tài khoản? <Link to='/register'>Tạo tài khoản mới</Link></p>
               </div>
             </div>
           </Col>

@@ -36,6 +36,14 @@
     color: var(--secondary-color);
 }
 
+.booking-link {
+    color: black;
+    text-decoration: none;
+    color: var(--heading-color);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
 .mobile__menu {
     font-size: 1.3rem;
     color: var(--heading-color);
